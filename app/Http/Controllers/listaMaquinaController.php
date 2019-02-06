@@ -24,8 +24,16 @@ class listaMaquinaController extends Controller
 //vistas de listas de cada maquina
 public function listaMaquina1()
 {
-     //esta linea es para llamar a todos los datos de la tabla
-     $maquina1 = maquina1::all();    //esta linea manda los datos a la vista maquina1
+    /**
+     * Modificated by  Victor_Hugo Date: 03-February-2019
+     */
+    //esta linea es para llamar a todos los datos de la tabla
+    //Sentencia de la clase collection para el filtrado de datos segun el tipo de estado
+    $maquina1 = maquina1::whereIn('estado',['Proceso','Trabajo'])->get();  
+     //esta linea manda los datos a la vista maquina1
+     //Ordenado del listado segun la fecha de creacion
+    $maquina1->sortBy('created_at');
+    error_log("Message ".$maquina1);
     return view('listasMaquinas/listaMaquina1') -> with(['maquina1'=>$maquina1]);
 }
 //termina vistas de listas de cada maquina
